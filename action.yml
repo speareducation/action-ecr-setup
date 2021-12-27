@@ -26,5 +26,7 @@ runs:
         }
         EOT
         mkdir -p ~/.docker
+        echo "${ECR_OUTPUT}"
+        
         echo ${ECR_OUTPUT} > ~/.docker/config.json
       shell: bash
