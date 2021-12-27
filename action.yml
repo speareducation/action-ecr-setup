@@ -17,14 +17,7 @@ runs:
         set -ex
         apt-get install -y amazon-ecr-credential-helper
         CRED_HELPER_CONFIG="${{ inputs.credHelperConfig }}"
-        ECR_OUTPUT=<<EOT
-        {
-          "auths": {}
-          "credHelpers": {
-            ${CRED_HELPER_CONFIG}
-          }
-        }
-        EOT
+        ECR_OUTPUT="{ \"auths\": {}, \n\"credHelpers\": { \n${CRED_HELPER_CONFIG} }}"
         mkdir -p ~/.docker
         echo "${ECR_OUTPUT}"
         
