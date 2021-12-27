@@ -1,0 +1,30 @@
+---
+name: Spear PHPUnit Runner
+description: A GitHub action to run PHPUnit and record test coverage
+branding:
+  icon: check-circle
+  color: green
+inputs:
+  credHelperConfig:
+    description: Auth section to add to docker.json
+    required: true
+    
+runs:
+  using: composite
+  steps:
+    - id: configure-docker-ecr-helper
+      run: |
+        set -ex
+        apt-get install -y amazon-ecr-credential-helper
+        CRED_HELPER_CONFIG="${{ inputs.credHelperConfig }}"
+        ECR_OUTPUT=<<EOT
+        {
+          "auths": {}
+          "credHelpers": {
+            ${CRED_HELPER_CONFIG}
+          }
+        }
+        EOT
+        mkdir -p ~/.docker
+        echo ${ECR_OUTPUT} > ~/.docker/config.json
+      shell: bash
