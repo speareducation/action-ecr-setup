@@ -15,7 +15,7 @@ runs:
     - id: configure-docker-ecr-helper
       run: |
         set -ex
-        apt-get install -y amazon-ecr-credential-helper
+        apt-get update && apt-get install -y amazon-ecr-credential-helper
         CRED_HELPER_CONFIG="${{ inputs.credHelperConfig }}"
         ECR_OUTPUT="{ \"auths\": {}, \"credHelpers\": { ${CRED_HELPER_CONFIG} }}"
         mkdir -p ~/.docker
